@@ -1,0 +1,69 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package gesthiper.oo.catalogos;
+
+import java.io.Serializable;
+
+/**
+ *
+ * @author Perez_25
+ */
+public class Produto implements Serializable{
+
+    private String codigo_produto;
+
+    public Produto() {
+        this.codigo_produto = "NR";
+    }
+
+    
+     public Produto(String cod){
+      this.codigo_produto = cod;
+    }
+    
+    public Produto(Produto c){
+      this.codigo_produto = c.getCodigo_produto();
+    }
+    
+    /**
+     * @return the codigo_produto
+     */
+    public String getCodigo_produto() {
+        return codigo_produto;
+    }
+
+    /**
+     * @param codigo_produto the codigo_produto to set
+     */
+    public void setCodigo_produto(String codigo_produto) {
+        this.codigo_produto = codigo_produto;
+    }
+    
+    
+       @Override
+    public Produto clone() {
+        return new Produto(this);
+    }
+
+    public boolean equals(Produto c) {
+        if (this == c) {
+            return true;
+        }
+        if ((c == null) || (this.getClass() != c.getClass())) {
+            return false;
+        }
+        Produto e = (Produto) c;
+        return this.getCodigo_produto().equals(e.getCodigo_produto());
+    }
+    
+       @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 71 * hash + (this.getCodigo_produto() != null ? this.getCodigo_produto().hashCode() : 0);
+        return hash;
+    }
+
+}

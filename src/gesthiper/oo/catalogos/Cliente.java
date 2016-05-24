@@ -1,0 +1,74 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package gesthiper.oo.catalogos;
+
+import java.io.Serializable;
+
+/**
+ *
+ * @author Perez_25
+ */
+public class Cliente implements Serializable {
+
+    private String codigo_cliente;
+
+    public Cliente() {
+        this.codigo_cliente = "NR";
+    }
+
+    public Cliente(String cod) {
+        this.codigo_cliente = cod;
+    }
+
+    public Cliente(Cliente c) {
+        this.codigo_cliente = c.getCodigo_cliente();
+    }
+
+    /**
+     * @return the codigo_cliente
+     */
+    public String getCodigo_cliente() {
+        return codigo_cliente;
+    }
+
+    /**
+     * @param codigo_cliente the codigo_cliente to set
+     */
+    public void setCodigo_cliente(String codigo_cliente) {
+        this.codigo_cliente = codigo_cliente;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        s.append("Cliente : ");
+        s.append(this.codigo_cliente).append("\n");
+        return s.toString();
+    }
+
+    @Override
+    public Cliente clone() {
+        return new Cliente(this);
+    }
+
+    public boolean equals(Cliente c) {
+        if (this == c) {
+            return true;
+        }
+        if ((c == null) || (this.getClass() != c.getClass())) {
+            return false;
+        }
+        Cliente e = (Cliente) c;
+        return this.getCodigo_cliente().equals(e.getCodigo_cliente());
+    }
+    
+      @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 71 * hash + (this.getCodigo_cliente() != null ? this.getCodigo_cliente().hashCode() : 0);
+        return hash;
+    }
+}
