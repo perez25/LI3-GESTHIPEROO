@@ -1,0 +1,281 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package gesthiper.oo;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.TreeSet;
+
+/**
+ *
+ * @author Perez_25
+ */
+public class Compras implements Serializable {
+
+    private HashMap<String, Compras_Cliente_Mes> cliente_compras;
+    private HashMap<String, HashMap<String, Cliente_Compras_a_Produto>> produto_compras;
+    private int total_de_compras_com_valor_zero;
+
+    public Compras() {
+        this.cliente_compras = new HashMap<>();
+        this.produto_compras = new HashMap<>();
+    }
+
+    public Compras(HashMap<String, HashMap<String, Cliente_Compras_a_Produto>> t) {
+        this.produto_compras = new HashMap<>();
+        for (Map.Entry<String, HashMap<String, Cliente_Compras_a_Produto>> entrySet : t.entrySet()) {
+            String key = entrySet.getKey();
+            HashMap<String, Cliente_Compras_a_Produto> value = entrySet.getValue();
+            this.produto_compras.put(key, value);
+        }
+    }
+
+    public void insert_compra(Compra t) {
+        if (t.getPreco() == 0.0) {
+            this.total_de_compras_com_valor_zero++;
+        }
+        if (this.getCliente_compras().containsKey(t.getCl().getCodigo_cliente())) {
+            this.getCliente_compras().get(t.getCl().getCodigo_cliente()).getProdutos().add(t.getProd().getCodigo_produto());
+            if (t.getModo() == 'N') {
+                this.getCliente_compras().get(t.getCl().getCodigo_cliente()).getTotal_gasto_mes_N()[t.getMes() - 1] += t.getPreco() * t.getQuantidade();
+                this.getCliente_compras().get(t.getCl().getCodigo_cliente()).getNumero_comprasN()[t.getMes() - 1]++;
+            } else {
+                this.getCliente_compras().get(t.getCl().getCodigo_cliente()).getTotal_gasto_mes_P()[t.getMes() - 1] += t.getPreco() * t.getQuantidade();
+                this.getCliente_compras().get(t.getCl().getCodigo_cliente()).getNumero_comprasP()[t.getMes() - 1]++;
+            }
+
+        } else {
+
+            Compras_Cliente_Mes c = new Compras_Cliente_Mes();
+            c.getProdutos().add(t.getProd().getCodigo_produto());
+
+            if (t.getModo() == 'N') {
+                c.getNumero_comprasN()[t.getMes() - 1] = 1;
+                c.getTotal_gasto_mes_N()[t.getMes() - 1] += t.getQuantidade() * t.getPreco();
+            } else {
+                c.getNumero_comprasP()[t.getMes() - 1] = 1;
+                c.getTotal_gasto_mes_P()[t.getMes() - 1] += t.getQuantidade() * t.getPreco();
+            }
+            this.getCliente_compras().put(t.getCl().getCodigo_cliente(), c);
+
+        }
+        if (this.getProduto_compras().containsKey(t.getProd().getCodigo_produto())) {
+            if (this.getProduto_compras().get(t.getProd().getCodigo_produto()).containsKey((t.getCl().getCodigo_cliente()))) {
+                if (t.getModo() == 'P') {
+                    this.produto_compras.get(t.getProd().getCodigo_produto()).get(t.getCl().getCodigo_cliente()).getMesesP()[t.getMes() - 1] += t.getQuantidade();
+                    this.produto_compras.get(t.getProd().getCodigo_produto()).get(t.getCl().getCodigo_cliente()).setNumeroComprasP(t.getQuantidade() + this.produto_compras.get(t.getProd().getCodigo_produto()).get(t.getCl().getCodigo_cliente()).getNumeroComprasP());
+                    this.produto_compras.get(t.getProd().getCodigo_produto()).get(t.getCl().getCodigo_cliente()).add_compra_by_mes_modo_P(t.getMes() - 1);
+
+                } else {
+                    this.produto_compras.get(t.getProd().getCodigo_produto()).get(t.getCl().getCodigo_cliente()).getMesesN()[t.getMes() - 1] += t.getQuantidade();
+                    this.produto_compras.get(t.getProd().getCodigo_produto()).get(t.getCl().getCodigo_cliente()).setNumeroComprasN(t.getQuantidade() + this.produto_compras.get(t.getProd().getCodigo_produto()).get(t.getCl().getCodigo_cliente()).getNumeroComprasN());
+                    this.produto_compras.get(t.getProd().getCodigo_produto()).get(t.getCl().getCodigo_cliente()).add_compra_by_mes_modo_N(t.getMes() - 1);
+                }
+            } else {
+                Cliente_Compras_a_Produto cc = new Cliente_Compras_a_Produto();
+                if (t.getModo() == 'P') {
+                    cc.getMesesP()[t.getMes() - 1] = t.getQuantidade();
+                    cc.setNumeroComprasP(t.getQuantidade());
+                    cc.setCl(t.getCl());
+                    cc.getCompras_mes_P()[t.getMes() - 1] = 1;
+                } else {
+                    cc.getMesesN()[t.getMes() - 1] = t.getQuantidade();
+                    cc.setNumeroComprasN(t.getQuantidade());
+                    cc.setCl(t.getCl());
+                    cc.getCompras_mes_N()[t.getMes() - 1] = 1;
+                }
+                this.produto_compras.get(t.getProd().getCodigo_produto()).put(t.getCl().codigo_cliente, cc);
+            }
+        } else {
+            HashMap<String, Cliente_Compras_a_Produto> novo = new HashMap<>();
+            Cliente_Compras_a_Produto cc = new Cliente_Compras_a_Produto();
+            if (t.getModo() == 'P') {
+                cc.getMesesP()[t.getMes() - 1] = t.getQuantidade();
+                cc.setNumeroComprasP(t.getQuantidade());
+                cc.setCl(t.getCl());
+                cc.getCompras_mes_P()[t.getMes() - 1] = 1;
+            } else {
+                cc.getMesesN()[t.getMes() - 1] = t.getQuantidade();
+                cc.setNumeroComprasN(t.getQuantidade());
+                cc.setCl(t.getCl());
+                cc.getCompras_mes_N()[t.getMes() - 1] = 1;
+            }
+            novo.put(t.getCl().getCodigo_cliente(), cc);
+            this.getProduto_compras().put(t.getProd().getCodigo_produto(), novo);
+
+        }
+
+    }
+
+    public Compras clone(Compras t) {
+        return null;
+    }
+
+    public boolean equals(Compras t) {
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        s.append("Módulo de Compras\n");
+        s.append("Numero de Produtos existentes : ").append(this.getProduto_compras().size()).append("\n");
+
+        return s.toString();
+    }
+
+    /**
+     * @return the produto_compras
+     */
+    public HashMap<String, HashMap<String, Cliente_Compras_a_Produto>> getProduto_compras() {
+        return produto_compras;
+    }
+
+    /**
+     * @return the total_de_compras_com_valor_zero
+     */
+    public int getTotal_de_compras_com_valor_zero() {
+        return total_de_compras_com_valor_zero;
+    }
+
+    public int getTotal_de_produtos_comprados() {
+        return this.produto_compras.size();
+    }
+
+    public ArrayList<String> devolve_numero_compras_mes_a_mes() {
+        ArrayList<String> res = new ArrayList<>();
+
+        int aux = 0;
+        int i = 0;
+        while (i < 12) {
+            for (HashMap<String, Cliente_Compras_a_Produto> cp : this.produto_compras.values()) {
+                for (Cliente_Compras_a_Produto cl : cp.values()) {
+                    aux += cl.getCompras_mes_P()[i] + cl.getCompras_mes_N()[i];
+                }
+            }
+            res.add(i, i + 1 + " - " + String.valueOf(aux));
+            aux = 0;
+            i++;
+        }
+        return res;
+    }
+
+    public ArrayList<String> devolve_numero_clientes_mes_a_mes_que_compraram() {
+        ArrayList<String> res = new ArrayList<>();
+        int aux = 0;
+        int mes = 0;
+        while (mes < 12) {
+            for (Compras_Cliente_Mes c : this.getCliente_compras().values()) {
+                if (c.getNumero_comprasN()[mes] > 0 || c.getNumero_comprasP()[mes] > 0) {
+                    aux++;
+                }
+            }
+            res.add(mes, mes + " - " + aux);
+            aux = 0;
+            mes++;
+        }
+        return res;
+    }
+
+    public int getNumeroDeClientesQueCompraram() {
+        return this.getCliente_compras().size();
+    }
+
+    /**
+     * @return the cliente_compras
+     */
+    public HashMap<String, Compras_Cliente_Mes> getCliente_compras() {
+        return cliente_compras;
+    }
+
+    /**
+     * @param cliente_compras the cliente_compras to set
+     */
+    public void setCliente_compras(HashMap<String, Compras_Cliente_Mes> cliente_compras) {
+        this.cliente_compras = cliente_compras;
+    }
+
+    public int getNumero_Compras_By_Mes(int mes) {
+        int res = 0;
+        for (Compras_Cliente_Mes c : this.cliente_compras.values()) {
+            res += c.getNumero_comprasN()[mes] + c.getNumero_comprasP()[mes];
+        }
+        return res;
+    }
+
+    public TreeSet<String> getClientes_que_compraram_em_certo_mes(int mes) {
+        TreeSet<String> res = new TreeSet<>();
+        for (String s : this.cliente_compras.keySet()) {
+            Compras_Cliente_Mes c = this.cliente_compras.get(s);
+            if (c.getNumero_comprasN()[mes] > 0 || c.getNumero_comprasP()[mes] > 0) {
+                res.add(s);
+            }
+        }
+        return res;
+    }
+
+    public int getNumero_Compras_cliente_mes(String c, int mes) {
+        if (this.cliente_compras.containsKey(c)) {
+
+            Compras_Cliente_Mes cm = this.cliente_compras.get(c);
+            return cm.getNumero_comprasN()[mes - 1] + cm.getNumero_comprasP()[mes - 1];
+        }
+        return 0;
+    }
+
+    public int getNumero_Produtos_cliente_mes(String c, int mes) {
+        int res = 0;
+        if (this.cliente_compras.containsKey(c)) {
+            for (HashMap<String, Cliente_Compras_a_Produto> cl : this.produto_compras.values()) {
+                if (cl.containsKey(c)) {
+                    if (cl.get(c).getCompras_mes_N()[mes - 1] > 0 || cl.get(c).getCompras_mes_P()[mes - 1] > 0) {
+                        res++;
+                    }
+                }
+            }
+        }
+        return res;
+    }
+
+    public double devolve_quantia_gasta_por_cliente_mes(String c, int mes) {
+        double res = 0.0;
+        if (this.cliente_compras.containsKey(c)) {
+            res += this.cliente_compras.get(c).getTotal_gasto_mes_N()[mes - 1] + this.cliente_compras.get(c).getTotal_gasto_mes_P()[mes - 1];
+        }
+
+        return res;
+    }
+
+    public int devolve_numero_de_vezes_que_produto_foi_comprado_mes(String produto, int mes) {
+        int res = 0;
+        if (this.produto_compras.containsKey(produto)) {
+            HashMap<String, Cliente_Compras_a_Produto> cp = this.produto_compras.get(produto);
+            for (Cliente_Compras_a_Produto c : cp.values()) {
+                res += c.getMesesN()[mes - 1] + c.getMesesP()[mes - 1];
+            }
+        }
+
+        return res;
+    }
+
+    public int devolve_numero_de_clientes_que_compraram_produto_em_certo_mes(String produto, int mes) {
+        int res = 0;
+        if (this.produto_compras.containsKey(produto)) {
+            HashMap<String, Cliente_Compras_a_Produto> cp = this.produto_compras.get(produto);
+            for (Cliente_Compras_a_Produto c : cp.values()) {
+                if (c.getCompras_mes_N()[mes - 1] > 0 || c.getCompras_mes_P()[mes - 1] > 0) {
+                    res++;
+                }
+            }
+        }
+
+        return res;
+    }
+
+}

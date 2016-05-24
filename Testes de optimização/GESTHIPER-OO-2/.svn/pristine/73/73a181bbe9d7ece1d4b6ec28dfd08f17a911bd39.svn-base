@@ -1,0 +1,107 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package gesthiper.oo;
+
+import java.util.ArrayList;
+
+/**
+ *
+ * @author Perez_25
+ */
+public class Cliente_Compras {
+
+    public Cliente cl;
+    public int[] mesesN;
+    public int[] mesesP;
+    public int numeroComprasN;
+    public int numeroComprasP;
+
+    public Cliente_Compras() {
+        this.cl = new Cliente();
+        this.mesesN = new int[11];
+        this.mesesP = new int[11];
+        this.numeroComprasN = 0;
+        this.numeroComprasP = 0;
+        for (int i = 0; i < this.mesesN.length; i++) {
+            this.mesesN[i] = 0;
+        }
+
+        for (int i = 0; i < this.mesesP.length; i++) {
+            this.mesesP[i] = 0;
+        }
+    }
+
+    /**
+     * @return the cl
+     */
+    public Cliente getCl() {
+        return cl.clone();
+    }
+
+    /**
+     * @param cl the cl to set
+     */
+    public void setCl(Cliente cl) {
+        this.cl = cl;
+    }
+
+    /**
+     * @return the mesesN
+     */
+    public int[] getMesesN() {
+        return mesesN;
+    }
+
+    /**
+     * @param mesesN the mesesN to set
+     */
+    public void setMesesN(int[] mesesN) {
+        this.mesesN = mesesN;
+    }
+
+    /**
+     * @return the mesesP
+     */
+    public int[] getMesesP() {
+        return mesesP;
+    }
+
+    /**
+     * @param mesesP the mesesP to set
+     */
+    public void setMesesP(int[] mesesP) {
+        this.mesesP = mesesP;
+    }
+
+    /**
+     * @return the numeroComprasN
+     */
+    public int getNumeroComprasN() {
+        return numeroComprasN;
+    }
+
+    /**
+     * @param numeroComprasN the numeroComprasN to set
+     */
+    public void setNumeroComprasN(int numeroComprasN) {
+        this.numeroComprasN = numeroComprasN;
+    }
+
+    /**
+     * @return the numeroComprasP
+     */
+    public int getNumeroComprasP() {
+        return numeroComprasP;
+    }
+
+    /**
+     * @param numeroComprasP the numeroComprasP to set
+     */
+    public void setNumeroComprasP(int numeroComprasP) {
+        this.numeroComprasP = numeroComprasP;
+    }
+
+}

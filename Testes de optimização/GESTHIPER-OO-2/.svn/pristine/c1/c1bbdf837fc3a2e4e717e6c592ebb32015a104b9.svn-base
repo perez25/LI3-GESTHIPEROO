@@ -1,0 +1,169 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package gesthiper.oo;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ *
+ * @author Perez_25
+ */
+public class Cont_produto {
+
+    private int tot_vendasN;
+    private double valor_totalN;
+    private int tot_vendasP;
+    private double valor_totalP;
+    //11 posições !
+    private List<Integer> meses_vendas_N;
+    private List<Integer> meses_vendas_P;
+    private Produto produto;
+
+    public Cont_produto() {
+        this.tot_vendasN = 0;
+        this.valor_totalN = 0.0;
+        this.tot_vendasP = 0;
+        this.valor_totalP = 0.0;
+        this.meses_vendas_N = new ArrayList<Integer>(12);
+        this.meses_vendas_P = new ArrayList<Integer>(12);
+        this.produto = new Produto();
+    }
+
+    public Cont_produto(int tot_vendasN, double valor_totalN, int tot_vendasP, double valor_totalP, List<Integer> meses_vendas_N, List<Integer> meses_vendas_P, Produto produto) {
+
+        this.tot_vendasN = tot_vendasN;
+        this.valor_totalN = valor_totalN;
+        this.tot_vendasP = tot_vendasP;
+        this.valor_totalP = valor_totalP;
+        this.produto = produto.clone();
+
+        this.meses_vendas_N = new ArrayList<Integer>(12);
+        for (int i : meses_vendas_N) {
+            this.meses_vendas_N.add(i);
+        }
+
+        this.meses_vendas_P = new ArrayList<Integer>(12);
+        for (int i : meses_vendas_P) {
+            this.meses_vendas_P.add(i);
+        }
+    }
+
+    public Cont_produto(Cont_produto cp) {
+        this.tot_vendasN = cp.getTot_VendasN();
+        this.valor_totalN = cp.getValor_totalN();
+        this.tot_vendasP = cp.getTot_VendasP();
+        this.valor_totalP = cp.getValor_totalP();
+        this.meses_vendas_N = cp.getMeses_Vendas_N();
+        this.meses_vendas_P = cp.getMeses_Vendas_P();
+        this.produto = cp.getProduto();
+
+    }
+
+    public List<Integer> getMeses_Vendas_N() {
+        List<Integer> res = new ArrayList<Integer>(12);
+        for (int i : this.meses_vendas_N) {
+            res.add(i);
+        }
+        return res;
+    }
+
+    public List<Integer> getMeses_Vendas_P() {
+        List<Integer> res = new ArrayList<Integer>(12);
+        for (int i : this.meses_vendas_P) {
+            res.add(i);
+        }
+        return res;
+    }
+
+    public int getTot_VendasN() {
+        return this.tot_vendasN;
+    }
+
+    public double getValor_totalN() {
+        return this.valor_totalN;
+    }
+
+    public int getTot_VendasP() {
+        return this.tot_vendasP;
+    }
+
+    public double getValor_totalP() {
+        return this.tot_vendasP;
+    }
+    
+    public Produto getProduto(){
+        return this.getProduto();
+    }
+
+    public Cont_produto clone() {
+        return new Cont_produto(this);
+    }
+
+    
+      public String toString() {
+        StringBuilder s = new StringBuilder();
+        s.append("Total de vendas do tipo N "+this.tot_vendasN+"\n");
+        s.append("Total de vendas do tipo P "+this.tot_vendasP+"\n");
+        s.append("Valor total de vendas do tipo N"+this.valor_totalN+"\n");
+        s.append("Valor total de vendas do tipo P"+this.valor_totalP+"\n");
+        
+        for(int i=0;i<12;i++){
+            s.append("Houve "+this.meses_vendas_N.get(i)+" vendas do tipo N no mês "+printMeses(i)+"\n");
+            s.append("Houve "+this.meses_vendas_P.get(i)+" vendas do tipo P no mês "+printMeses(i)+"\n");   
+        }
+        return s.toString();
+        
+    }
+            
+            
+            
+    public String printMeses(int x) {
+        String c = "";
+        switch (x) {
+            case 0:
+                c = "Janeiro";
+                break;
+            case 1:
+                c = "Fevereiro";
+                break;
+            case 2:
+                c = "Março";
+                break;
+            case 3:
+                c = "Abril";
+                break;
+            case 4:
+                c = "Maio";
+                break;
+            case 5:
+                c = "Junho";
+                break;
+            case 6:
+                c = "Julho";
+                break;
+            case 7:
+                c = "Agosto";
+                break;
+            case 8:
+                c = "Setembro";
+                break;
+            case 9:
+                c = "Outubro";
+                break;
+            case 10:
+                c = "Novembro";
+                break;
+            case 11:
+                c = "Dezembro";
+                break;
+
+        }
+        return c;
+    }
+}

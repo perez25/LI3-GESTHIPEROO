@@ -1,0 +1,121 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package gesthiper.oo;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+
+/**
+ *
+ * @author Perez_25
+ */
+public class Compras {
+
+    private HashSet<String> clientes_que_compraram;
+    private HashMap<String, HashMap<String, Cliente_Compras>> produto_compras;
+    private int total_de_compras_com_valor_zero;
+
+    public Compras() {
+        this.clientes_que_compraram = new HashSet<>();
+        this.produto_compras = new HashMap<>();
+    }
+
+    public Compras(HashMap<String, HashMap<String, Cliente_Compras>> t) {
+        this.produto_compras = new HashMap<>();
+        for (Map.Entry<String, HashMap<String, Cliente_Compras>> entrySet : t.entrySet()) {
+            String key = entrySet.getKey();
+            HashMap<String, Cliente_Compras> value = entrySet.getValue();
+            this.produto_compras.put(key, value);
+        }
+    }
+
+    public void insert_compra(Compra t) {
+        if (t.getPreco() == 0.0) {
+            this.total_de_compras_com_valor_zero++;
+        }
+
+       
+          this.getClientes_que_compraram().add(t.getCl().getCodigo_cliente());
+        
+        if (this.getProduto_compras().containsKey(t.getProd().getCodigo_produto())) {
+            if (this.getProduto_compras().get(t.getProd().getCodigo_produto()).containsKey((t.getCl().getCodigo_cliente()))) {
+                if (t.getModo() == 'P') {
+                    this.produto_compras.get(t.getProd().getCodigo_produto()).get(t.getCl().getCodigo_cliente()).mesesP[t.getMes() - 1] += t.getQuantidade();
+                    this.produto_compras.get(t.getProd().getCodigo_produto()).get(t.getCl().getCodigo_cliente()).numeroComprasP += t.getQuantidade();
+                } else {
+                    this.produto_compras.get(t.getProd().getCodigo_produto()).get(t.getCl().getCodigo_cliente()).mesesN[t.getMes() - 1] += t.getQuantidade();
+                    this.produto_compras.get(t.getProd().getCodigo_produto()).get(t.getCl().getCodigo_cliente()).numeroComprasN += t.getQuantidade();
+
+                }
+            }
+
+        } else {
+            HashMap<String, Cliente_Compras> novo = new HashMap<>();
+            Cliente_Compras cc = new Cliente_Compras();
+            if (t.getModo() == 'P') {
+                cc.mesesP[t.getMes() - 1] = t.getQuantidade();
+                cc.numeroComprasP += t.getQuantidade();
+                cc.cl = t.getCl();
+            } else {
+                cc.mesesN[t.getMes() - 1] = t.quantidade;
+                cc.numeroComprasN += t.quantidade;
+                cc.cl = t.getCl();
+            }
+            novo.put(t.cl.getCodigo_cliente(), cc);
+            this.getProduto_compras().put(t.getProd().getCodigo_produto(), novo);
+
+        }
+
+    }
+
+    public Compras clone(Compras t) {
+        return null;
+    }
+
+    public boolean equals(Compras t) {
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        s.append("Módulo de Compras\n");
+        s.append("Numero de Produtos existentes : ").append(this.getProduto_compras().size()).append("\n");
+
+        return s.toString();
+    }
+
+    public int getCliente_que_Compraram() {
+        return this.getClientes_que_compraram().size();
+    }
+
+    /**
+     * @return the clientes_que_compraram
+     */
+    public HashSet<String> getClientes_que_compraram() {
+        return clientes_que_compraram;
+    }
+
+    /**
+     * @return the produto_compras
+     */
+    public HashMap<String, HashMap<String, Cliente_Compras>> getProduto_compras() {
+        return produto_compras;
+    }
+
+    /**
+     * @return the total_de_compras_com_valor_zero
+     */
+    public int getTotal_de_compras_com_valor_zero() {
+        return total_de_compras_com_valor_zero;
+    }
+    
+    public int getTotal_de_produtos_comprados(){
+        return this.produto_compras.size();
+    }
+
+}

@@ -1,0 +1,60 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package gesthiper.oo;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
+
+/**
+ *
+ * @author Perez_25
+ */
+public class Catalogo_clientes {
+
+    private Set<Cliente> lista_clientes;
+
+    public Catalogo_clientes() {
+        this.lista_clientes = new TreeSet<Cliente>();
+    }
+
+    public Catalogo_clientes(Set<Cliente> lista_clientes) {
+        this.lista_clientes = new TreeSet<Cliente>();
+        for (Cliente cl : lista_clientes) {
+            lista_clientes.add((Cliente) cl.clone());
+        }
+    }
+
+    public Catalogo_clientes(Catalogo_clientes cc) {
+        this.lista_clientes = cc.getListaClientes();
+    }
+
+    public Set<Cliente> getListaClientes() {
+        TreeSet<Cliente> res = new TreeSet<Cliente>();
+        for (Cliente cl : this.lista_clientes) {
+            res.add(cl.clone());
+        }
+        return res;
+    }
+
+    public boolean existeCliente(Cliente c) {
+        return (this.lista_clientes.contains(c));
+    }
+
+    public Catalogo_clientes clone() {
+        return new Catalogo_clientes(this);
+    }
+
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        for (Cliente cl : this.lista_clientes) {
+            s.append("Cliente : ");
+            s.append(cl.getCodigo_cliente()).append("\n");
+        }
+        return s.toString();
+    }
+}

@@ -1,0 +1,23 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package gesthiper.oo;
+
+import java.util.ArrayList;
+
+/**
+ *
+ * @author Perez_25
+ */
+public class Cont_produto {
+    private int tot_vendasN;
+    private double valor_totalN;
+    private int tot_vendasP;
+    private double valor_totalP;
+    //11 posições !
+    private ArrayList<Integer> meses_vendas_N;
+    private ArrayList<Integer> meses_vendas_P;
+    
+}

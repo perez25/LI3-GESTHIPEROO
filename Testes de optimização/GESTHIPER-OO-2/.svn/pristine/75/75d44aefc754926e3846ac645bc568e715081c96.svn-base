@@ -1,0 +1,57 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package gesthiper.oo;
+
+import gesthiper.oo.catalogos.Cliente;
+
+/**
+ *
+ * @author Perez_25
+ */
+public class ParClienteNumProdutosComprados {
+
+    private Cliente cliente;
+    private int produtos_comprados;
+
+    public ParClienteNumProdutosComprados() {
+        this.cliente = new Cliente();
+        this.produtos_comprados = 0;
+    }
+
+    public ParClienteNumProdutosComprados(Cliente cl, int pc) {
+        this.cliente = cl.clone();
+        this.produtos_comprados = pc;
+    }
+
+    /**
+     * @return the cliente
+     */
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    /**
+     * @param cliente the cliente to set
+     */
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    /**
+     * @return the produtos_comprados
+     */
+    public int getProdutos_comprados() {
+        return produtos_comprados;
+    }
+
+    /**
+     * @param produtos_comprados the produtos_comprados to set
+     */
+    public void setProdutos_comprados(int produtos_comprados) {
+        this.produtos_comprados = produtos_comprados;
+    }
+
+}

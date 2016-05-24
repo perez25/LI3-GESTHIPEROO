@@ -1,0 +1,86 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package gesthiper.oo;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ *
+ * @author Perez_25
+ */
+public class Contabilidade {
+
+    private int numero_vendas;
+    private Map<String, Cont_produto> lista_produtos;
+  
+    public Contabilidade() {
+        this.lista_produtos = new HashMap<String, Cont_produto>();
+        this.numero_vendas = 0;
+    }
+
+    public Contabilidade(int numero_vendas, Map<String, Cont_produto> lista_produtos) {
+        this.numero_vendas = numero_vendas;
+        this.lista_produtos = new HashMap<String, Cont_produto>();
+        for (String s : lista_produtos.keySet()) {
+            lista_produtos.put(s, (Cont_produto) lista_produtos.get(s).clone());
+        }
+    }
+
+    public Contabilidade (Contabilidade c){
+        this.lista_produtos = c.getListaProdutos();
+        this.numero_vendas = c.getNumeroVendas();
+    }
+    
+    public Map<String, Cont_produto> getListaProdutos(){
+        Map<String, Cont_produto> res = new HashMap<String, Cont_produto>();
+        for (String s : this.lista_produtos.keySet()) {
+            res.put(s, (Cont_produto) lista_produtos.get(s).clone());
+        }
+        return res;
+    }
+    
+    public int getNumeroVendas(){
+        return this.numero_vendas;
+    }
+    
+     public void setNumero_vendas(int numero_vendas) {
+        this.numero_vendas = numero_vendas;
+    }
+
+    public void setLista_produtos(Map<String, Cont_produto> lista_produtos) {
+        for (Map.Entry<String, Cont_produto> entrySet : lista_produtos.entrySet()) {
+            String key = entrySet.getKey();
+            Cont_produto value = entrySet.getValue();
+            
+        }
+    }
+    
+    public Contabilidade clone() {
+        return new Contabilidade(this);
+    }
+    
+     public String toString() {
+        StringBuilder s = new StringBuilder();
+        s.append("Número total de vendas: "+this.numero_vendas+"\n");
+        for (String r : this.lista_produtos.keySet()) {
+            s.append("Produto : "+r+"\n");
+            s.append(lista_produtos.get(r).toString());
+        }
+        return s.toString();
+    }
+     
+     public void insert_cont(Cont_produto cp) {
+         //if(this.lista_produtos.containsKey(cp.getProduto())){
+             
+         }
+         
+    //construtores
+    //gets
+    //clones
+    //toString
+    //insert && update
+}

@@ -1,0 +1,66 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package gesthiper.oo;
+
+/**
+ *
+ * @author Perez_25
+ */
+public class Menu {
+
+    private Hipermercado hiper;
+
+    public Menu() {
+        this.hiper  = new Hipermercado();
+    }
+
+    public void menu_principal() {
+        Input i = new Input();
+        System.out.println("\t\t\t\tGESTHIPER-OO");
+        System.out.println("\t\t\t\t1 - Ler ficheiros");
+        System.out.println("\t\t\t\t--------------------------------");
+        System.out.println("\t\t\t\t2 - Gravar");
+        System.out.println("\t\t\t\t--------------------------------");
+        System.out.println("\t\t\t\t3 - Carregar dados");
+        System.out.println("\t\t\t\t--------------------------------");
+        System.out.println("\t\t\t\t0 - Sair");
+        System.out.println("\t\t\t\t--------------------------------");
+
+        int opcao = i.lerInteiro();
+        switch (opcao) {
+            case 1:
+                /*System.out.println("\t\t\t\tFicheiro de produtos");
+                String f1 = i.lerString();
+                System.out.println("\t\t\t\tFicheiro de clientes");
+                String f2 = i.lerString();
+                System.out.println("\t\t\t\tFicheiro de Compras");
+                String f3 = i.lerString();*/
+                this.hiper.leitura_de_ficheiros("FichProdutos.txt", "FichClientes.txt", "Compras.txt");
+                System.out.println("\t\t\t\t    - Dados de leitura -");
+                System.out.println("\t\t\t\t Ficheiro de Produtos "+this.hiper.getDados_leitura().getFicheiro_produtos());
+                System.out.println("\t\t\t\t Ficheiro de Clientes "+this.hiper.getDados_leitura().getFicheiro_clientes());
+                System.out.println("\t\t\t\t Ficheiro de Compras "+this.hiper.getDados_leitura().getFicheiro_compras());
+                System.out.println("\t\t\t\t Numero de Produtos "+this.hiper.getDados_leitura().getTotal_produtos());
+                System.out.println("\t\t\t\t Numero de clientes "+this.hiper.getDados_leitura().getTotal_clientes());
+                System.out.println("\t\t\t\t Numero de compras "+this.hiper.getDados_leitura().getTotal_compras());
+                System.out.println("\t\t\t\t Numero de produtos que compraram "+this.hiper.getDados_leitura().getTotal_produtos_diferentes_comprados());
+                System.out.println("\t\t\t\t Numero de produtos que não compraram "+this.hiper.getDados_leitura().getTotal_produtos_nao_comprados());
+                System.out.println("\t\t\t\t Numero de clientes que compraram "+this.hiper.getDados_leitura().getTotal_clientes_que_compraram());
+                System.out.println("\t\t\t\t Numero de clientes que não compraram "+this.hiper.getDados_leitura().getTotal_clientes_que_nao_compraram());
+                System.out.println("\t\t\t\t Numero de compras com valor zero "+this.hiper.getDados_leitura().getTotal_compras_valor_zero());
+                
+                
+                
+                
+                break;
+                
+                
+                
+        }
+
+    }
+
+}

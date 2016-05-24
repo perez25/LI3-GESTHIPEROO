@@ -1,0 +1,66 @@
+ /*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package gesthiper.oo;
+
+import java.util.HashMap;
+import java.util.Set;
+import java.util.TreeSet;
+
+/**
+ *
+ * @author Perez_25
+ */
+public class Catalogo_produtos {
+<<<<<<< .mine
+    private Set<Produto> lista_produtos;
+
+    public Catalogo_produtos() {
+        this.lista_produtos = new TreeSet<Produto>();
+    }
+}=======
+    private Set<Produto> lista_produtos;
+
+    public Catalogo_produtos() {
+        this.lista_produtos = new TreeSet<Produto>();
+    }
+
+    public Catalogo_produtos(Set<Produto> lista_produtos) {
+        this.lista_produtos = new TreeSet<Produto>();
+        for (Produto p : lista_produtos) {
+            lista_produtos.add((Produto) p.clone());
+        }
+    }
+
+    public Catalogo_produtos(Catalogo_produtos cp) {
+        this.lista_produtos = cp.getListaProdutos();
+    }
+
+    public Set<Produto> getListaProdutos() {
+        TreeSet<Produto> res = new TreeSet<Produto>();
+        for (Produto p : this.lista_produtos) {
+            res.add(p.clone());
+        }
+        return res;
+    }
+
+    public boolean existeProduto(Produto p) {
+        return (this.lista_produtos.contains(p));
+    }
+
+    public Catalogo_produtos clone() {
+        return new Catalogo_produtos(this);
+    }
+
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        for (Produto p : this.lista_produtos) {
+            s.append("Produto : ");
+            s.append(p.getCodigo_produto()).append("\n");
+        }
+        return s.toString();
+    }   
+}
+>>>>>>> .r5

@@ -1,0 +1,39 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package gesthiper.oo;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ *
+ * @author Perez_25
+ */
+public class Contabilidade {
+    private int numero_vendas;
+    private HashMap<String,Cont_produto> lista_produtos;
+    
+    
+      public Contabilidade() {
+        this.lista_produtos = new HashMap<String,Cont_produto>();
+        this.numero_vendas=0;
+    }
+
+    public Contabilidade(Map<String,Cont_produto> lista_produtos) {
+        this.lista_produtos = new HashMap<String,Cont_produto>();
+        for (String s : lista_produtos.keySet()) {
+            //lista_produtos.put(s, (Cont_produto) lista_produtos.get(s).clone());
+        }
+    }
+
+    
+    //construtores
+    //gets
+    //clones
+    //toString
+    //insert && update
+    
+}

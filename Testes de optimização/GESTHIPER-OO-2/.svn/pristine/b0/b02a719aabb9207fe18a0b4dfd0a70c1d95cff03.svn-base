@@ -1,0 +1,259 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package gesthiper.oo;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+/**
+ *
+ * @author Perez_25
+ */
+public class Menu {
+
+    private Hipermercado hiper;
+    private Input input;
+
+    public Menu() {
+        this.hiper = new Hipermercado();
+        this.input = new Input();
+    }
+
+    public void menu_principal() throws IOException {
+        Input i = new Input();
+        System.out.println("\t\t\t\t| GESTHIPER-OO | \n\n\n");
+        
+        
+        System.out.println("\t\t\t\t--------------------------------");
+        System.out.println("\t\t\t\t1 - Ler ficheiros");
+        System.out.println("\t\t\t\t--------------------------------");
+        System.out.println("\t\t\t\t2 - Gravar");
+        System.out.println("\t\t\t\t--------------------------------");
+        System.out.println("\t\t\t\t3 - Carregar dados");
+        System.out.println("\t\t\t\t--------------------------------");
+        System.out.println("\t\t\t\t0 - Sair");
+        System.out.println("\t\t\t\t--------------------------------");
+        print_linha_comandos();
+        int opcao = i.lerInteiro();
+        switch (opcao) {
+            case 1:
+                print_linha("Deseja ler ficheiros default ? ");
+                char ler_ficheiros_default = 'N';
+                print_linha_comandos();
+                ler_ficheiros_default = input.leChar();
+                if (ler_ficheiros_default == 'N') {
+                    System.out.print("Ficheiro de produtos: ");
+                    String f1 = input.lerString();
+                    System.out.print("Ficheiro de clientes: ");
+                    String f2 = input.lerString();
+                    System.out.print(" Ficheiro de Compras: ");
+                    String f3 = input.lerString();
+                    this.hiper.leitura_de_ficheiros(f1, f2, f3);
+                } else {
+                    this.hiper.leitura_de_ficheiros("FichProdutos.txt", "FichClientes.txt", "Compras.txt");
+                    apresenta_estatisticas_de_leitura_1_1();
+                    menu_after_leitura();
+                }
+                break;
+        }
+
+    }
+
+    public void menu_after_leitura() throws IOException {
+        
+        System.out.println("\t\t\t\t--------------------------------");
+        System.out.println("\t\t\t\t            GESTHIPER-OO        ");
+        System.out.println("\t\t\t\t--------------------------------\n\n\n\n");
+        System.out.println("\t\t\t\t1 - Consulta de estatisticas");
+        System.out.println("\t\t\t\t--------------------------------");
+        System.out.println("\t\t\t\t2 - Consultas interactivas");
+        System.out.println("\t\t\t\t--------------------------------");
+        System.out.println("\t\t\t\t0 - Voltar");
+        System.out.println("\t\t\t\t--------------------------------");
+        print_linha_comandos();
+        int opcao;
+        opcao = input.lerInteiro();
+        switch (opcao) {
+            case 1:
+                apresenta_estatisticas_de_leitura_1_2();
+                break;
+            case 2:
+                break;
+            case 0:
+                menu_principal();
+        }
+
+    }
+
+    public void apresenta_estatisticas_de_leitura_1_1() {
+        limparEcra(30);
+        print_linha("\t\t\t- DADOS REFERENTES AO ULTIMO FICHEIRO LIDO -\n\n");
+        print_linha("----------------------------------------------------------------");
+        System.out.println("\t\t\t\t o Ficheiro de Produtos :" + this.hiper.getDados_leitura().getFicheiro_produtos());
+        System.out.println("\t\t\t\t o Ficheiro de Clientes : " + this.hiper.getDados_leitura().getFicheiro_clientes());
+        System.out.println("\t\t\t\t o Ficheiro de Compras : " + this.hiper.getDados_leitura().getFicheiro_compras());
+        System.out.println("\t\t\t\t o Total de Produtos : " + this.hiper.getDados_leitura().getTotal_produtos());
+        System.out.println("\t\t\t\t o Total de clientes : " + this.hiper.getDados_leitura().getTotal_clientes());
+        System.out.println("\t\t\t\t o Total de compras : " + this.hiper.getDados_leitura().getTotal_compras());
+        System.out.println("\t\t\t\t o Total de produtos comprados : " + this.hiper.getDados_leitura().getTotal_produtos_diferentes_comprados());
+        System.out.println("\t\t\t\t o Total de produtos não comprados :" + this.hiper.getDados_leitura().getTotal_produtos_nao_comprados());
+        System.out.println("\t\t\t\t o Total de clientes que compraram :" + this.hiper.getDados_leitura().getTotal_clientes_que_compraram());
+        System.out.println("\t\t\t\t o Total de clientes que não compraram :" + this.hiper.getDados_leitura().getTotal_clientes_que_nao_compraram());
+        System.out.println("\t\t\t\t o Total de compras com valor zero :" + this.hiper.getDados_leitura().getTotal_compras_valor_zero());
+        System.out.println("\t\t\t\t o Facturação total :" + this.hiper.getDados_leitura().getFacturacao_total());
+        print_linha("----------------------------------------------------------------");
+        try {
+            Thread.sleep(2000);                 //1000 milliseconds is one second.
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    public void apresenta_estatisticas_de_leitura_1_2() throws IOException {
+        int opcao;
+        limparEcra(40);
+        print_linha("CONSULTA DE ESTATISTICAS");
+        print_linha("----------------------------------------------------------------");
+        print_linha("1 - Número total de compras por mês");
+        print_linha("----------------------------------------------------------------");
+        print_linha("2 - Facturação total por mês (valor total das compras/vendas) e total global");
+        print_linha("----------------------------------------------------------------");
+        print_linha("3 - Número de distintos clientes que compraram em cada mês ");
+        print_linha("----------------------------------------------------------------");
+        print_linha("4 - Total de registos de compras inválidos");
+        print_linha("----------------------------------------------------------------");
+        print_linha("0 - Voltar");
+        print_linha("----------------------------------------------------------------");
+
+        print_linha_comandos();
+        opcao = this.input.lerInteiro();
+
+        switch (opcao) {
+            case 1:
+                limparEcra(2);
+                ArrayList<String> res = this.hiper.devolve_compras_mes_a_mes();
+                print_linha("MÊS  -  VALOR");
+                print_linha("-------------------------------");
+                printLista_Strings(res);
+                print_linha("-------------------------------");
+                print_linha("Prime qualquer tecla");
+                input.lerString();
+                apresenta_estatisticas_de_leitura_1_2();
+                break;
+
+            case 2:
+                limparEcra(2);
+                ArrayList<String> res2 = this.hiper.devolve_facturacao_total_por_mes();
+                print_linha("-------------------------------");
+                print_linha("MÊS - VALOR");
+                printLista_Strings(res2);
+                print_linha("-------------------------------");
+                print_linha("Prime qualquer tecla");
+                input.lerString();
+                apresenta_estatisticas_de_leitura_1_2();
+                break;
+
+            case 3:
+                limparEcra(2);
+                ArrayList<String> res3 = this.hiper.devolve_clientes_que_compraram_mes();
+                print_linha("MÊS - VALOR");
+                print_linha("-------------------------------");
+                printLista_Strings(res3);
+                print_linha("-------------------------------");
+                print_linha("Prime qualquer tecla");
+                input.lerString();
+                apresenta_estatisticas_de_leitura_1_2();
+
+                break;
+
+            case 4:
+                 limparEcra(2);
+                 print_linha("O numero de compras inválidas é de : "+this.hiper.getDados_leitura().getTotal_compras_invalidas());
+                 print_linha("Prime qualquer tecla");
+                 input.lerString();
+                 apresenta_estatisticas_de_leitura_1_2();
+                 
+                 break;
+               
+                
+            case 5:
+                break;
+
+            case 0:
+                menu_after_leitura();
+                break;
+
+        }
+
+    }
+
+    private void print_linha(String linha) {
+        System.out.println(linha);
+
+    }
+
+    private void print_linha_comandos() {
+        System.out.print("GESTHIPER-OO/");
+    }
+
+    private void printLista_Strings(ArrayList<String> l) {
+        for (String l1 : l) {
+            print_linha(l1);
+        }
+
+    }
+
+    private String printMeses(int x) {
+        String c = "";
+        switch (x) {
+            case 0:
+                c = "Janeiro";
+                break;
+            case 1:
+                c = "Fevereiro";
+                break;
+            case 2:
+                c = "Março";
+                break;
+            case 3:
+                c = "Abril";
+                break;
+            case 4:
+                c = "Maio";
+                break;
+            case 5:
+                c = "Junho";
+                break;
+            case 6:
+                c = "Julho";
+                break;
+            case 7:
+                c = "Agosto";
+                break;
+            case 8:
+                c = "Setembro";
+                break;
+            case 9:
+                c = "Outubro";
+                break;
+            case 10:
+                c = "Novembro";
+                break;
+            case 11:
+                c = "Dezembro";
+                break;
+
+        }
+        return c;
+    }
+
+    private void limparEcra(int x) {
+        for (int i = 0; i < x; i++) {
+            System.out.println("");
+        }
+    }
+}

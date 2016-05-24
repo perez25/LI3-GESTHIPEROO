@@ -1,0 +1,111 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package gesthiper.oo;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+
+/**
+ *
+ * @author Perez_25
+ */
+public class Hipermercado {
+ private Contabilidade cont;
+ private Compras compras;
+ private Catalogo_clientes ct_clientes;
+ private Catalogo_produtos ct_produtos;
+
+
+ 
+ public Hipermercado le_produtos(Hipermercado hiper, String ficheiro){
+     String path = "/Users/Perez_25/Desktop/GESTHIPER-OO/src/gesthiper/oo/ficheiros/";
+   
+     BufferedReader br = null;
+        try {
+            String sCurrentLine;
+            br = new BufferedReader(new FileReader(path+ficheiro));
+
+            while ((sCurrentLine = br.readLine()) != null) {
+               sCurrentLine =  sCurrentLine.trim();
+                //ct_clientes.add_cliente(path)
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (br != null) {
+                    br.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return hiper;
+    }
+    
+    public Hipermercado le_clientes(Hipermercado hiper,String ficheiro){
+     String path = "/Users/Perez_25/Desktop/GESTHIPER-OO/src/gesthiper/oo/ficheiros/";
+     BufferedReader br = null;
+        try {
+            String sCurrentLine;
+            br = new BufferedReader(new FileReader(path+ficheiro));
+
+            while ((sCurrentLine = br.readLine()) != null) {
+                     sCurrentLine =  sCurrentLine.trim();
+                    //inserir Catalogo_clientes 
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (br != null) {
+                    br.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return hiper;
+    }
+    
+ 
+ 
+public Hipermercado le_compras(Hipermercado hiper,String ficheiro){
+     String path = "/Users/Perez_25/Desktop/GESTHIPER-OO/src/gesthiper/oo/ficheiros/";
+   
+     BufferedReader br = null;
+        try {
+            String sCurrentLine;
+            br = new BufferedReader(new FileReader(path+ficheiro));
+
+            while ((sCurrentLine = br.readLine()) != null) {
+               String[] parts = sCurrentLine.split(" ");
+                for(int i =0;i<parts.length;i++){
+                    parts[i] = parts[i].trim();
+                    //part[0] -> produto
+                    //part[1] -> preço
+                 }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (br != null) {
+                    br.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+       return hiper;
+    }
+
+}

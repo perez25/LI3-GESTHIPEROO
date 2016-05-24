@@ -1,0 +1,32 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package gesthiper.oo;
+
+/**
+ *
+ * @author Perez_25
+ */
+public class Menu {
+    private GESTHIPEROO gesthiper_oo;
+    
+    public Menu(GESTHIPEROO gest){
+    this.gesthiper_oo = gest;
+    }
+    
+    public void menu_principal(){
+        System.out.println("\t\t\t\tGESTHIPER-OO");
+        System.out.println("\t\t\t\t1 - Ler ficheiros");
+        System.out.println("\t\t\t\t--------------------------------");
+        System.out.println("\t\t\t\t2 - Gravar");
+        System.out.println("\t\t\t\t--------------------------------");
+        System.out.println("\t\t\t\t3 - Carregar dados");
+        System.out.println("\t\t\t\t--------------------------------");
+        System.out.println("\t\t\t\t0 - Sair");
+        System.out.println("\t\t\t\t--------------------------------");
+    
+    }
+    
+}

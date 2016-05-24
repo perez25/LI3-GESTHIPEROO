@@ -1,0 +1,184 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package gesthiper.oo;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+/**
+ *
+ * @author Perez_25
+ */
+public class Hipermercado {
+
+    private Contabilidade cont;
+    private Compras compras;
+    private Catalogo_clientes ct_clientes;
+    private Catalogo_produtos ct_produtos;
+    private Dados_leitura dados_leitura;
+
+    public Hipermercado() {
+        this.ct_clientes = new Catalogo_clientes();
+        this.ct_produtos = new Catalogo_produtos();
+        this.compras = new Compras();
+        this.dados_leitura = new Dados_leitura();
+    }
+
+    public Hipermercado le_produtos(String ficheiro) {
+        String path = "/Users/Perez_25/Desktop/GESTHIPER-OO/src/gesthiper/oo/ficheiros/";
+
+        BufferedReader br = null;
+        try {
+            String sCurrentLine;
+            br = new BufferedReader(new FileReader(path + ficheiro));
+
+            while ((sCurrentLine = br.readLine()) != null) {
+                sCurrentLine = sCurrentLine.trim();
+                Produto n = new Produto(sCurrentLine);
+                this.ct_produtos.insert_produto(n);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (br != null) {
+                    br.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        return this;
+    }
+
+    public Hipermercado le_clientes(String ficheiro) {
+        String path = "/Users/Perez_25/Desktop/GESTHIPER-OO/src/gesthiper/oo/ficheiros/";
+        BufferedReader br = null;
+        try {
+            String sCurrentLine;
+            br = new BufferedReader(new FileReader(path + ficheiro));
+
+            while ((sCurrentLine = br.readLine()) != null) {
+                sCurrentLine = sCurrentLine.trim();
+                Cliente n = new Cliente(sCurrentLine);
+                this.ct_clientes.insert_cliente(n);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (br != null) {
+                    br.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        return this;
+    }
+
+    public Hipermercado le_compras(String ficheiro) {
+        String path = "/Users/Perez_25/Desktop/GESTHIPER-OO/src/gesthiper/oo/ficheiros/";
+
+        BufferedReader br = null;
+        try {
+            String sCurrentLine;
+            br = new BufferedReader(new FileReader(path + ficheiro));
+
+            while ((sCurrentLine = br.readLine()) != null) {
+                String[] parts = sCurrentLine.split(" ");
+                for (int i = 0; i < parts.length; i++) {
+                    parts[i] = parts[i].trim();
+                }
+                Produto p = new Produto(parts[0]);
+                Cliente c = new Cliente(parts[4]);
+
+                if (this.ct_clientes.existeCliente(c) && this.ct_produtos.existeProduto(p)) {
+
+                    Compra n = new Compra(p, c, Integer.valueOf(parts[5]), Double.valueOf(parts[1]),
+                            parts[3].charAt(0), Integer.valueOf(parts[2]));
+                    this.compras.insert_compra(n);
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (br != null) {
+                    br.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        return this;
+    }
+
+    public Hipermercado leitura_de_ficheiros(String produtos, String clientes, String compras) {
+        this.dados_leitura.setFicheiro_clientes(clientes);
+        this.dados_leitura.setFicheiro_produtos(produtos);
+        this.dados_leitura.setFicheiro_compras(compras);
+        this.le_produtos(produtos);
+        this.le_clientes(clientes);
+        this.le_compras(compras);
+        this.dados_leitura.setTotal_clientes_que_compraram(this.devolve_numero_de_clientes_que_compraram());
+        this.dados_leitura.setTotal_produtos(this.devolve_numero_total_de_produtos());
+        this.dados_leitura.setTotal_clientes(this.devolve_numero_de_clientes_que_compraram());
+        this.dados_leitura.setTotal_clientes_que_nao_compraram(this.devolve_numero_total_de_clientes_que_nao_compraram());
+        this.dados_leitura.setTotal_compras_valor_zero(this.devolve_numero_total_de_compras_com_valor_zero());
+        this.dados_leitura.setTotal_produtos_diferentes_comprados(this.devolve_numero_total_de_produtos_comprados());
+        this.dados_leitura.setTotal_produtos_nao_comprados(this.devolve_numero_total_de_produtos_nao_comprados());
+        return this;
+    }
+
+    public Dados_leitura getDados_leitura() {
+        return this.dados_leitura.clone();
+    }
+
+    public void insert_compra(Compra t) {
+        this.compras.insert_compra(t);
+    }
+
+    public boolean existe_produto_catalogo_produtos(Produto t) {
+        return this.ct_produtos.existeProduto(t);
+    }
+
+    public int devolve_numero_de_clientes_que_compraram() {
+        return this.compras.getCliente_que_Compraram();
+    }
+
+    public int devolve_numero_total_de_produtos() {
+        return this.ct_produtos.getNumerodeProdutos();
+    }
+
+    public int devolve_numero_total_de_clientes() {
+        return this.ct_clientes.getNumerodeClientes();
+    }
+
+    public int devolve_numero_total_de_clientes_que_nao_compraram() {
+        return this.devolve_numero_total_de_clientes() - this.devolve_numero_de_clientes_que_compraram();
+    }
+
+    public int devolve_numero_total_de_compras_com_valor_zero() {
+        return this.compras.getTotal_de_compras_com_valor_zero();
+    }
+
+    public int devolve_numero_total_de_produtos_comprados() {
+        return this.compras.getTotal_de_produtos_comprados();
+    }
+
+    public int devolve_numero_total_de_produtos_nao_comprados() {
+        return this.devolve_numero_total_de_produtos() - this.devolve_numero_total_de_produtos_comprados();
+    }
+
+}
